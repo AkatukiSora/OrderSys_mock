@@ -1,0 +1,15 @@
+# Dependency directories
+**/node_modules
+
+# Build outputs
+**/.next
+**/out
+
+# Local config
+**/.env
+**/.env.*
+
+# Misc
+**/.DS_Store
+**/npm-debug.log*
+**/pnpm-debug.log*
