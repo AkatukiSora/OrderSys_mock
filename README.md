@@ -1,16 +1,19 @@
-# Order System Mock Prototype
+# イベント向け注文整理モック（Next.js + MUI）
 
-This repository hosts a mobile-first mock for the event ordering system described in `docs/mock_requirements.md`. The prototype focuses on realistic front-end flows (menu browsing, cart creation, QR issuance, and simulated sold-out notification) without needing a backend.
+スマホ前提のイベント注文体験をフロントエンドだけで確認できるモックです。Next.js (App Router) と MUI を使用し、カート操作・QR コード発行・品切れ通知を画面上で疑似的に再現します。
 
-## Project layout
-- `frontend/`: Next.js + MUI prototype built with pnpm (App Router, TypeScript).
-- `docs/mock_requirements.md`: Detailed requirements for the front-end mock.
+## セットアップ
+```bash
+pnpm install
+pnpm dev
+```
 
-## Getting started (frontend)
-1. Install dependencies: `pnpm install`
-2. Run the dev server: `pnpm dev`
-3. Open the app at http://localhost:3000 on a mobile viewport to verify menu browsing, cart operations, and the 10-second sold-out notification after QR generation.
+- 開発サーバー: http://localhost:3000
+- 推奨表示: ブラウザのデバイスモードで縦長スマホ幅を指定してください。
 
-Notes:
-- Behavior is intentionally mocked; QR payloads are generated on the client for demo purposes.
-- The UI is designed for a vertical, smartphone-first layout.
+## 画面フロー
+1. **メニュー一覧**: 商品を確認し「カートに追加」ボタンで数量を積み上げ。
+2. **カート**: 数量増減、削除、全消去、合計金額表示をサポート。
+3. **QR 発行**: ワンクリックで疑似 QR コードを生成し、10 秒後に「品切れ想定」のポップアップ通知で自動キャンセルを再現。
+
+バックエンド連携は不要で、UI 挙動の確認に特化しています。
