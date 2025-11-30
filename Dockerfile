@@ -1,14 +1,13 @@
-FROM node:22-bookworm-slim AS deps
+FROM node:22-slim AS builder
 WORKDIR /app
 # Ensure pnpm is available since the project is managed with pnpm.
 RUN corepack enable
-COPY frontend/pnpm-lock.yaml frontend/pnpm-workspace.yaml frontend/package.json ./
-WORKDIR /app/frontend
+COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 RUN pnpm install --frozen-lockfile
-COPY frontend .
+COPY . .
 RUN pnpm run build
 
-FROM node:22-bookworm-slim AS runner
+FROM node:22-slim AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
@@ -17,6 +16,6 @@ RUN corepack enable
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
-COPY frontend/package.json .
+COPY --from=builder /app/package.json /app/pnpm-lock.yaml ./
 EXPOSE 3000
 CMD ["pnpm", "start"]
